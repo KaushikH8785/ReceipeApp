@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import React, { useCallback } from "react";
+import get from 'lodash/get';
 
 const RecipeContext = createContext();
 
@@ -78,7 +79,8 @@ export function RecipeProvider({ children }) {
       e.preventDefault();
       const newArtists = [...artists];
       const findArtist = newArtists.find((a, idx) => idx === aridx);
-      findArtist.ingredient.splice(inidx, 1);
+      const ingredientGet = get(findArtist, 'ingredient', [])
+      ingredientGet.splice(inidx, 1); 
       newArtists.splice(aridx, 1, findArtist);
       setArtists(newArtists);
     },
@@ -91,12 +93,13 @@ export function RecipeProvider({ children }) {
       e.preventDefault();
       const newArtistsArr = [...artists];
       const findArtistArr = newArtistsArr.find((a, idx) => idx === aridx);
+      const ingredientGetArr = get(findArtistArr, 'ingredient', []);
       if (editIngredient === "") {
         alert("Please enter ingredient value");
-        findArtistArr.ingredient.splice(inidx, 0);
+        ingredientGetArr.splice(inidx, 0);
         setArtists(newArtistsArr);
       } else {
-        findArtistArr.ingredient.splice(inidx, 1, editIngredient);
+        ingredientGetArr.splice(inidx, 1, editIngredient);
         setArtists(newArtistsArr);
       }
       setToggle(false);

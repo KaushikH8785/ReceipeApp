@@ -2,6 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import RecipeContext from "../RecipeContext";
 import edit from "../icon_pencil.svg";
+import get from 'lodash/get';
 
 function RecipeList() {
   const {
@@ -18,7 +19,7 @@ function RecipeList() {
     IngreToggle,
   } = useContext(RecipeContext);
   return artists.map((artist, aridx) => {
-    const propertyName = artist.ingredient;
+    const propertyName = get(artist, 'ingredient', []);
     return (
       <ul className="added-recipe-block" key={artist.id}>
         <li>
